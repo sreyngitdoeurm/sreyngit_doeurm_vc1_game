@@ -47,26 +47,6 @@ def arrayToDrawing(array, size):
                 canvas.create_rectangle(x0, y0, x1, y1, outline="blue", fill = "blue")
             else:
                 canvas.create_rectangle(x0, y0, x1, y1, fill = "white")
-def moveRight(event):
-    global grid
-    for index in grid:
-        for i in range(len(index)):
-            if index[i] == 1:
-                indexOne = i
-            if indexOne < len(index) - 1:
-                index[indexOne] = 0
-                index[indexOne + 1] = 1
-        arrayToDrawing(grid, square_size)
-
-def moveLeft(event):
-    global grid
-    for i in range(len(grid)):
-        if grid[i] == 1:
-            indexOne = i
-        if indexOne > 0:
-            grid[indexOne] = 0
-            grid[indexOne - 1] = 1
-        arrayToDrawing(grid, square_size) 
 
 # pack means "draw what i put inside"
 canvas.pack(expand=True, fill='both')
