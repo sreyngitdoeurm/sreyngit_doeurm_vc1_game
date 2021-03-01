@@ -11,9 +11,17 @@ frame.master.title("SREYNGIT GAME")
 
 # HERE YOU CAN START TO DRAW
 # canvas is like "svg tag" in HTML, it allows user to draw shapes
+# set image ennemies(2), player("p"), diamond("d") and time ("t")
+player=tk.PhotoImage(file="player1.png")
+ennemies=tk.PhotoImage(file="zombie.png")
+diamond=tk.PhotoImage(file="diamond.png")
+forest=tk.PhotoImage(file="cactus.png")
+signExit=tk.PhotoImage(file="signExit.png")
+life=tk.PhotoImage(file="life.png")
+#display image
 
 
-# 0 is empty, p is player, 1 is wall, d is diamond, t is life, 2 is ennemy
+# 0 is empty, p is player, 1 is wall, d is diamond, t is life, 2 is ennemy, w is way
 canvas = tk.Canvas(frame)
 grid = [[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         [0,"p",0,1,"t",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -29,7 +37,7 @@ grid = [[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
         [1,0,1,1,1,1,1,1,1,0,1,1,1,0,0,1,0,1,0,1],
         [1,0,1,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1],
         [1,0,1,0,1,0,1,1,1,1,1,0,1,0,0,1,0,1,0,1],
-        [1,0,1,"t",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+        [1,0,1,"t",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,3],
         [1,0,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,0,"w"],
         [1,0,0,0,0,0,0,1,"t",0,0,0,0,2,1,2,0,0,0,"w"],
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
@@ -38,6 +46,8 @@ square_size = 30
 
 # VARIABLES
 def arrayToDrawing(array, size):
+    global player, ennemies, dimond, forest
+    canvas.delete("all")
     number=0
     for index in array:
         number+=1
@@ -47,19 +57,21 @@ def arrayToDrawing(array, size):
             x1 = x0 + size
             y1 = y0 + size
             if index[i] == 1:
-                canvas.create_rectangle(x0, y0, x1, y1, outline="orange", fill = "blue")
+                canvas.create_rectangle(x0, y0, x1, y1, fill="orange")
             elif index[i]==2:
-                canvas.create_oval(x0,y0,x1,y1, fill="yellow")
+                canvas.create_image(x0+15, y0+10, image=ennemies)
             elif index[i]=="p":
-                canvas.create_oval(x0,y0,x1,y1, fill="black")
+                canvas.create_image(x0+15, y0+10, image=player)
             elif index[i]=="d":
-                canvas.create_oval(x0,y0,x1,y1, fill="green")
+                canvas.create_image(x0+15, y0+15, image=diamond)
             elif index[i]=="t":
-                canvas.create_oval(x0,y0,x1,y1, fill="red")
+                canvas.create_image(x0+15,y0+15, image=life)
             elif index[i]=="w":
                 canvas.create_rectangle(x0,y0,x1,y1, outline="pink", fill="pink")
+            elif index[i]==3:
+                canvas.create_image(x0,y0, image=signExit)
             else:
-                canvas.create_rectangle(x0, y0, x1, y1, outline="cyan", fill = "cyan")
+                canvas.create_rectangle(x0, y0, x1, y1, fill="white")
 
 def getPlayerPosition(grid):
     for n in range(len(grid)):
