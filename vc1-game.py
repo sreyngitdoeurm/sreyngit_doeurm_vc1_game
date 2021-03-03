@@ -15,7 +15,7 @@ frame.master.title("SREYNGIT GAME")
 # canvas is like "svg tag" in HTML, it allows user to draw shapes
 # set image ennemies(2), player("p"), diamond("d") and time ("t")
 player=tk.PhotoImage(file="player1.png")
-ennemies=tk.PhotoImage(file="zombie.png")
+ennemies=tk.PhotoImage(file="cov.png")
 diamond=tk.PhotoImage(file="diamond.png")
 signExit=tk.PhotoImage(file="signExit.png")
 life=tk.PhotoImage(file="life.png")
@@ -26,22 +26,22 @@ bg=tk.PhotoImage(file="bg.png")
 # 0 is empty, p is player, 1 is wall, d is diamond, t is life, 2 is ennemy, w is way
 canvas = tk.Canvas(frame)
 grid = [[0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [0,1,0,1,"t",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+        [0,1,0,1,"l",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
         ["p",0,0,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,0,1],
         [1,1,0,1,0,0,0,1,0,1,0,1,0,1,0,1,0,1,0,1],
-        [1,0,0,1,0,1,0,0,0,1,0,1,2,0,"t",1,0,1,0,1],
+        [1,0,0,1,0,1,0,0,0,1,0,1,2,0,"l",1,0,1,0,1],
         [1,0,0,0,0,1,1,0,1,1,0,1,1,1,1,1,0,1,0,1],
         [1,0,1,1,0,0,1,0,0,0,2,0,0,0,0,1,0,1,0,1],
-        [1,1,1,0,0,2,1,0,1,1,1,1,1,"t",0,1,0,1,0,1],
-        [1,0,1,0,1,"t",1,1,1,"d",0,0,1,1,0,1,0,0,0,1],
+        [1,1,1,0,0,2,1,0,1,1,1,1,1,"l",0,1,0,1,0,1],
+        [1,0,1,0,1,"l",1,1,1,"d",0,0,1,1,0,1,0,0,0,1],
         [1,0,1,0,1,1,1,0,1,1,1,0,1,0,0,1,1,1,0,1],
-        [1,0,0,0,0,0,0,0,1,0,0,2,1,0,0,1,"t",1,0,1],
-        [1,0,1,1,1,1,1,1,1,0,1,1,1,0,0,1,0,1,0,1],
+        [1,0,0,0,0,0,0,0,1,0,0,2,1,0,0,1,"l",1,0,1],
+        [1,0,1,1,1,1,1,1,1,0,1,1,1,0,0,1,2,1,0,1],
         [1,0,1,0,1,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1],
         [1,0,1,0,1,0,1,1,1,1,1,0,1,0,0,1,0,1,0,1],
-        [1,0,1,"t",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
+        [1,0,1,"l",0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1],
         [1,0,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,0,1],
-        [1,0,0,0,0,0,0,1,"t",0,0,0,0,2,1,2,0,0,0,"w"],
+        [1,0,2,0,0,0,0,1,"l",0,0,0,0,2,1,2,0,0,0,"w"],
         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3]]
 # variables
 size = 30
@@ -69,7 +69,7 @@ def arrayToDrawing(array, size):
                 canvas.create_image(x0+15, y0+10, image=player)
             elif index[i]=="d":
                 canvas.create_image(x0+15, y0+15, image=diamond)
-            elif index[i]=="t":
+            elif index[i]=="l":
                 canvas.create_image(x0+15,y0+15, image=life)
             elif index[i]=="w":
                 canvas.create_rectangle(x0,y0,x1,y1, outline="cyan", fill=None)
@@ -100,7 +100,7 @@ def moveLeft(event):
         if  grid[playerRow][playerCol-1] ==0:
             grid[playerRow][playerCol]=0
             grid[playerRow][playerCol-1]="p"
-        elif grid[playerRow][playerCol-1]=="t":
+        elif grid[playerRow][playerCol-1]=="l":
             grid[playerRow][playerCol]=0
             grid[playerRow][playerCol-1]="p"
             numberOfLife += 1
@@ -120,9 +120,9 @@ def moveLeft(event):
             grid[playerRow][playerCol-1]="p"
             winsound.PlaySound("win.wav", winsound.SND_FILENAME)
             messagebox.showinfo(message="you win")
-        if numberOfLife<1:
-            winsound.PlaySound("gameover.wav", winsound.SND_FILENAME)
-            messagebox.showinfo(messagebox="Game Over")
+    if numberOfLife<1:
+        winsound.PlaySound("gameover.wav", winsound.SND_FILENAME)
+        messagebox.showinfo(message="Game Over")
             
     winsound.PlaySound("walk.wav", winsound.SND_FILENAME)
     arrayToDrawing(grid,size)
@@ -135,7 +135,7 @@ def moveRight(event):
         if  grid[playerRow][playerCol+1] ==0:
             grid[playerRow][playerCol]=0
             grid[playerRow][playerCol+1]="p"
-        elif grid[playerRow][playerCol+1]=="t":
+        elif grid[playerRow][playerCol+1]=="l":
             grid[playerRow][playerCol]=0
             grid[playerRow][playerCol+1]="p"
             numberOfLife += 1
@@ -155,9 +155,9 @@ def moveRight(event):
             grid[playerRow][playerCol+1]="p"
             winsound.PlaySound("win.wav", winsound.SND_FILENAME)
             messagebox.showinfo(message="you win")
-        if numberOfLife<1:
-            winsound.PlaySound("gameover.wav", winsound.SND_FILENAME)
-            messagebox.showinfo(messagebox="Game Over")
+    if numberOfLife<1:
+        winsound.PlaySound("gameover.wav", winsound.SND_FILENAME)
+        messagebox.showinfo(message="Game Over")
     winsound.PlaySound("walk.wav", winsound.SND_FILENAME)
     arrayToDrawing(grid,size)
 def moveUp(event):
@@ -168,7 +168,7 @@ def moveUp(event):
         if  grid[playerRow-1][playerCol] ==0:
             grid[playerRow][playerCol]=0
             grid[playerRow-1][playerCol]="p"
-        elif grid[playerRow-1][playerCol]=="t":
+        elif grid[playerRow-1][playerCol]=="l":
             grid[playerRow][playerCol]=0
             grid[playerRow-1][playerCol]="p"
             numberOfLife += 1
@@ -188,9 +188,9 @@ def moveUp(event):
             grid[playerRow-1][playerCol]="p"
             winsound.PlaySound("win.wav", winsound.SND_FILENAME)
             messagebox.showinfo(message="you win")
-        if numberOfLife<1:
-            winsound.PlaySound("gameover.wav", winsound.SND_FILENAME)
-            messagebox.showinfo(messagebox="Game Over")
+    if numberOfLife<1:
+        winsound.PlaySound("gameover.wav", winsound.SND_FILENAME)
+        messagebox.showinfo(message="Game Over")
     winsound.PlaySound("walk.wav", winsound.SND_FILENAME)
     arrayToDrawing(grid,size)
 def moveDown(event):
@@ -201,7 +201,7 @@ def moveDown(event):
         if  grid[playerRow+1][playerCol] ==0:
             grid[playerRow][playerCol]=0
             grid[playerRow+1][playerCol]="p"
-        elif grid[playerRow+1][playerCol]=="t":
+        elif grid[playerRow+1][playerCol]=="l":
             grid[playerRow][playerCol]=0
             grid[playerRow+1][playerCol]="p"
             numberOfLife += 1
@@ -221,9 +221,9 @@ def moveDown(event):
             grid[playerRow+1][playerCol]="p"
             winsound.PlaySound("win.wav", winsound.SND_FILENAME)
             messagebox.showinfo(message="you win")
-        if numberOfLife<1:
-            winsound.PlaySound("gameover.wav", winsound.SND_FILENAME)
-            messagebox.showinfo(messagebox="Game Over")
+    if numberOfLife<1:
+        winsound.PlaySound("gameover.wav", winsound.SND_FILENAME)
+        messagebox.showinfo(message="Game Over")
     winsound.PlaySound("walk.wav", winsound.SND_FILENAME)
     arrayToDrawing(grid,size)
 # move enemies
@@ -236,21 +236,13 @@ def getEnemyPosition(grid):
                 enemyCol=i
         enemiesPosition.append([enemyRow,enemyCol])
     return (enemiesPosition)
-# def moveEnemies():
-#     global grid
-#     enemyRow=getEnemyPosition(grid)[0]
-#     enemyCol=getEnemyPosition(grid)[1]
-#     if grid[enemyRow][enemyCol+1]!=1:
-#         canvas.move()
-
-# display win whan player pick up diamond
-# def displayWin():
-#     global grid
-#     playerRow = getPlayerPosition(grid)[0]
-#     playerCol = getPlayerPosition(grid)[1] 
-#     if grid[playerRow][playerCol]=="d":
-#         canvas.create_text(300,300, text="You Won")
-#     arrayToDrawing(grid,size)
+# move enemies
+def moveEnemies():
+    global grid
+    enemyRow=getEnemyPosition(grid)[0]
+    enemyCol=getEnemyPosition(grid)[1]
+    if grid[enemyRow][enemyCol+1]!=1:
+        canvas.move()
 # pack means "draw what i put inside"
 canvas.pack(expand=True, fill='both')
 frame.pack(expand=True, fill='both')
